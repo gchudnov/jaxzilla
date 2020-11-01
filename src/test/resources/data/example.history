@@ -1,0 +1,62 @@
+onStartDocument
+onStartObject
+onStartKeyValue
+onKey: "id"
+onIntegerValue: 1
+onEndKeyValue
+onStartKeyValue
+onKey: "name"
+onStringValue: Foo
+onEndKeyValue
+onStartKeyValue
+onKey: "price"
+onIntegerValue: 123
+onEndKeyValue
+onStartKeyValue
+onKey: "tags"
+onStartArray
+onStartElement
+onStringValue: new
+onEndElement
+onStartElement
+onStringValue: north
+onEndElement
+onEndArray
+onEndKeyValue
+onStartKeyValue
+onKey: "stock"
+onStartObject
+onStartKeyValue
+onKey: "warehouse"
+onIntegerValue: 150
+onEndKeyValue
+onStartKeyValue
+onKey: "retail"
+onDecimalValue: 20.12
+onEndKeyValue
+onEndObject
+onEndKeyValue
+onStartKeyValue
+onKey: "origin"
+onNullValue
+onEndKeyValue
+onStartKeyValue
+onKey: "attributes"
+onStartObject
+onStartKeyValue
+onKey: "color"
+onStartObject
+onStartKeyValue
+onKey: "name"
+onStringValue: red
+onEndKeyValue
+onStartKeyValue
+onKey: "value"
+onStringValue: 0xFF0000
+onEndKeyValue
+onEndObject
+onEndKeyValue
+onEndObject
+onEndKeyValue
+onEndObject
+onEndDocument

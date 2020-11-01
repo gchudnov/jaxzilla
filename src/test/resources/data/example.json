@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "name": "Foo",
+  "price": 123,
+  "tags": [
+    "new",
+    "north"
+  ],
+  "stock": {
+    "warehouse": 150,
+    "retail": 20.12
+  },
+  "origin": null,
+  "attributes": {
+    "color": {
+      "name": "red",
+      "value": "0xFF0000"
+    }
+  }
+}

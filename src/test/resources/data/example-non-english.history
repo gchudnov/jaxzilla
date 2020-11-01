@@ -1,0 +1,8 @@
+onStartDocument
+onStartObject
+onStartKeyValue
+onKey: "name"
+onStringValue: Jürgen
+onEndKeyValue
+onEndObject
+onEndDocument

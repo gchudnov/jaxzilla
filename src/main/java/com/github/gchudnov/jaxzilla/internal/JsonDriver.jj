@@ -1,0 +1,174 @@
+options {
+  DEBUG_LOOKAHEAD=false;
+  DEBUG_PARSER=false;
+  DEBUG_TOKEN_MANAGER=false;
+  JAVA_UNICODE_ESCAPE=false;
+  STATIC=false;
+  SUPPORT_CLASS_VISIBILITY_PUBLIC=false;
+  UNICODE_INPUT=true;
+}
+
+PARSER_BEGIN(JsonDriver)
+package com.github.gchudnov.jaxzilla.internal;
+
+public class JsonDriver extends JsonDriverBase { }
+PARSER_END(JsonDriver)
+
+// JSON
+
+// WS
+SKIP: {
+  <WHITESPACE: " " | "\t">
+| <EOL: "\n" | "\r">
+}
+
+// COMMON
+TOKEN: {
+  <COMMA: ",">
+| <LBRACE: "{">
+| <RBRACE: "}">
+| <COLON: ":">
+| <LBRACKET: "[">
+| <RBRACKET: "]">
+}
+
+// NUMBER
+TOKEN: {
+  <#ZERO: "0">
+| <#DIGIT_NONZERO: ["1"-"9"]>
+| <#DIGIT: (<DIGIT_NONZERO> | <ZERO>)>
+| <#EXPONENT: ["e","E"] ("+" | "-")? (<DIGIT>)+ >
+| <#FRACTION: "." (<DIGIT>)+ >
+| <NUMBER_INTEGER:
+    ("-")?
+    (<ZERO> | (<DIGIT_NONZERO> (<DIGIT>)* ))
+  >
+| <NUMBER_DECIMAL:
+    ("-")?
+    (<ZERO> | (<DIGIT_NONZERO> (<DIGIT>)* ))
+    (<FRACTION>)?
+    (<EXPONENT>)?
+  >
+}
+
+// BOOLEAN
+TOKEN: {
+  <TRUE: "true">
+| <FALSE: "false">
+}
+
+// NULL
+TOKEN: {
+  <NULL: "null">
+}
+
+// STRING
+TOKEN: {
+  <#QUOTE: "\"">
+| <#HEX: (["0"-"9","a"-"f","A"-"F"])>
+| <#UNICODE: "u" ((<HEX>)){4} >
+| <#STRING_BODY: (
+    (~["\"", "\\", "\r", "\n", "\f", "\t", "\b", "\0"]) |
+    ( "\\" ( "\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t" | <UNICODE> ) )
+  )+>
+| <STRING: <QUOTE> (<STRING_BODY>)? <QUOTE> >
+}
+
+// ENTRY-POINT
+void any() : {}
+{
+  { startDocument(); }
+  Value()
+  <EOF>
+  { endDocument(); }
+}
+
+// STRUCTURES
+
+void Value() : {}
+{
+  SimpleValue()
+| Object()
+| Array()
+}
+
+void Object() : { Token t; }
+{
+  <LBRACE>
+  { startObject(); }
+  (Members())?
+  <RBRACE>
+  { endObject(); }
+}
+
+void Members() : { }
+{
+  Member()
+  (<COMMA> Member())*
+}
+
+void Member() : { Token t; }
+{
+  { startKeyValue(); }
+  t = <STRING> { key(t.image); }
+  <COLON>
+  Value()
+  { endKeyValue(); }
+}
+
+void Array() : { }
+{
+  <LBRACKET>
+  { startArray(); }
+  (Elements())?
+  <RBRACKET>
+  { endArray(); }
+}
+
+void Elements() : { }
+{
+  ArrayValue()
+  (<COMMA> ArrayValue())*
+}
+
+void ArrayValue() : { }
+{
+  { startElement(); }
+  Value()
+  { endElement(); }
+}
+
+void SimpleValue() : {}
+{
+  String()
+| Number()
+| True()
+| False()
+| Null()
+}
+
+void Number() : { Token t; }
+{
+  t = <NUMBER_INTEGER> { valueInteger(t.image); }
+| t = <NUMBER_DECIMAL> { valueDecimal(t.image); }
+}
+
+void String() : { Token t; }
+{
+  t = <STRING> { valueString(t.image); }
+}
+
+void True() : { }
+{
+  <TRUE> { valueBoolean(true); }
+}
+
+void False() : { }
+{
+  <FALSE> { valueBoolean(false); }
+}
+
+void Null() : { }
+{
+  <NULL> { valueNull(); }
+}
