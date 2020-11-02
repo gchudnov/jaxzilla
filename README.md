@@ -2,7 +2,9 @@
 
 <img src="res/images/jaxzilla.png" width="192px" height="192px" align="right" />
 
-A JSON parser for Scala with SAX-style API.
+> A JSON parser for Scala with SAX-style API.
+
+![Scala CI](https://github.com/gchudnov/jaxzilla/workflows/Scala%20CI/badge.svg)
 
 The parser parses the document and dispatches events corresponding to the structure of the document.
 
