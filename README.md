@@ -16,8 +16,8 @@ libraryDependencies += "com.github.gchudnov" %% "jaxzilla" % "1.0.0"
 
 ## Usage
 
-Create an instance of `JsonHandler` interface and pass it to `JsonParser.parse` with the byte input stream, `ByteArrayInputStream`.
-When parsed, a series of event will be generated. On completion, `JsonParser.parse` returns a result: `Either[Throwable, Unit]`.
+Create an instance of `JsonHandler` interface and pass it to `JsonParser.parse` with a byte input stream, `ByteArrayInputStream`.
+When the data stream is parsed, a series of event will be generated. On completion, `JsonParser.parse` returns a result: `Either[Throwable, Unit]`.
 
 ```scala
 import java.io.ByteArrayInputStream
