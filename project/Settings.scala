@@ -1,8 +1,13 @@
+import com.jsuereth.sbtpgp.PgpKeys
+import com.jsuereth.sbtpgp.SbtPgp.autoImport.usePgpKeyHex
 import sbt.Keys._
 import sbt._
+import sbtrelease.ReleasePlugin.autoImport._
+import sbtrelease.ReleaseStateTransformations._
 
 object Settings {
-  private val scalaV = "2.13.3"
+  private val scala213 = "2.13.3"
+  private val scalaV   = scala213
 
   private val sharedScalacOptions = Seq(
     "-deprecation", // Emit warning and location for usages of deprecated APIs.
@@ -20,17 +25,65 @@ object Settings {
     "-Ywarn-numeric-widen" // Warn when numerics are widened.
   )
 
+  val supportedScalaVersions = List(scala213)
+
   val sharedResolvers: Vector[MavenRepository] = Seq(
     Resolver.jcenterRepo,
-    Resolver.mavenLocal
+    Resolver.mavenLocal,
+    Resolver.sonatypeRepo("releases")
   ).toVector
 
   val shared: Seq[Setting[_]] = Seq(
     scalacOptions ++= sharedScalacOptions,
+    crossScalaVersions := supportedScalaVersions,
     scalaVersion := scalaV,
     ThisBuild / turbo := true,
     resolvers := Resolver.combineDefaultResolvers(sharedResolvers),
     compileOrder := CompileOrder.JavaThenScala,
-    organization := "com.github.gchudnov"
+    organization := "com.github.gchudnov",
+    homepage := Some(url("https://github.com/gchudnov/jaxzilla")),
+    description := "A JSON parser for Scala with SAX-style API.",
+    licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
+    scmInfo := Some(
+      ScmInfo(
+        url("https://github.com/gchudnov/jaxzilla"),
+        "scm:git@github.com:gchudnov/jaxzilla.git"
+      )
+    ),
+    developers := List(
+      Developer(id = "gchudnov", name = "Grigorii Chudnov", email = "g.chudnov@gmail.com", url = url("https://github.com/gchudnov"))
+    )
+  )
+
+  val noPublish: Seq[Setting[_]] = Seq(
+    publishArtifact := false,
+    publish := {},
+    publishLocal := {},
+    skip in publish := true
+  )
+
+  val sonatype: Seq[Setting[_]] = Seq(
+    publishMavenStyle := true,
+    Test / publishArtifact := false,
+    credentials := Seq(Credentials(Path.userHome / ".sbt" / ".credentials-sonatype")),
+    usePgpKeyHex("8A64557ABEC7965C31A1DF8DE12F2C6DE96AF6D1"),
+    publishTo := Some("Sonatype Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
+    releaseCrossBuild := true,
+    releaseIgnoreUntrackedFiles := true,
+    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      runTest,
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      releaseStepCommandAndRemaining("+publishSigned"),
+      releaseStepCommandAndRemaining("sonatypeBundleRelease"),
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
+    )
   )
 }

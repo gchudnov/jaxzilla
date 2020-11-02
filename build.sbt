@@ -13,6 +13,7 @@ lazy val allSettings = Settings.shared ++ testSettings
 
 lazy val root = (project in file("."))
   .settings(allSettings: _*)
+  .settings(Settings.sonatype)
   .settings(
     name := "jaxzilla",
     libraryDependencies ++= Dependencies.Jaxzilla

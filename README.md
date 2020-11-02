@@ -2,7 +2,7 @@
 
 <img src="res/images/jaxzilla.png" width="192px" height="192px" align="right" />
 
-A JSON parser for Scala with SAX style API.
+A JSON parser for Scala with SAX-style API.
 
 The parser parses the document and dispatches events corresponding to the structure of the document.
 
@@ -15,6 +15,9 @@ libraryDependencies += "com.github.gchudnov" %% "jaxzilla" % "1.0.0"
 ```
 
 ## Usage
+
+Create an instance of `JsonHandler` interface and pass it to `JsonParser.parse` with the byte input stream, `ByteArrayInputStream`.
+When parsed, a series of event will be generated. On completion, `JsonParser.parse` returns a result: `Either[Throwable, Unit]`.
 
 ```scala
 import java.io.ByteArrayInputStream
@@ -51,7 +54,7 @@ object DemoApp extends App {
 }
 ```
 
-When executed, the following events will be triggerd:
+When executed, the following events will be triggered:
 
 ```text
 onStartDocument
