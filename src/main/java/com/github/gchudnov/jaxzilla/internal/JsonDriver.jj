@@ -75,7 +75,7 @@ TOKEN: {
 }
 
 // ENTRY-POINT
-void any() : {}
+void any() : { }
 {
   { startDocument(); }
   Value()
@@ -85,14 +85,14 @@ void any() : {}
 
 // STRUCTURES
 
-void Value() : {}
+void Value() : { }
 {
   SimpleValue()
 | Object()
 | Array()
 }
 
-void Object() : { Token t; }
+void Object() : { }
 {
   <LBRACE>
   { startObject(); }
@@ -138,7 +138,7 @@ void ArrayValue() : { }
   { endElement(); }
 }
 
-void SimpleValue() : {}
+void SimpleValue() : { }
 {
   String()
 | Number()
