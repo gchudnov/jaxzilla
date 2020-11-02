@@ -4,7 +4,7 @@ import com.github.gchudnov.jaxzilla.JsonHandler;
 
 class JsonDriverBase {
 
-  JsonHandler handler = new DefaultJsonHandler();
+  private JsonHandler handler = new DefaultJsonHandler();
 
   public void setHandler(JsonHandler handler) {
     this.handler = handler;
