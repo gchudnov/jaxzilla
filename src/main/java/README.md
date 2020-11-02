@@ -1,8 +1,6 @@
 ## JsonDriver
 
-Json Parser is built with [JavaCC](https://javacc.github.io/javacc/), a parser generator for use with Java applications.
-
-Building parser driver with [JavaCC](https://javacc.github.io/javacc/)
+Json Parser is built with [JavaCC](https://javacc.github.io/javacc/), a parser generator for Java applications.
 
 ## Installation
 
