@@ -44,7 +44,7 @@ class JsonParserSpec extends AnyWordSpec with Matchers {
       }
     }
 
-    "parsing tests" should {
+    "executing tests" should {
       "return the expected values" in {
         val resDir = "test_parsing/"
         val names  = FileOps.listResource("test_parsing/").toTry.get
