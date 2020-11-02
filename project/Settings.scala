@@ -4,6 +4,7 @@ import sbt.Keys._
 import sbt._
 import sbtrelease.ReleasePlugin.autoImport._
 import sbtrelease.ReleaseStateTransformations._
+import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 
 object Settings {
   private val scala213 = "2.13.3"
@@ -68,7 +69,7 @@ object Settings {
     Test / publishArtifact := false,
     credentials := Seq(Credentials(Path.userHome / ".sbt" / ".credentials-sonatype")),
     usePgpKeyHex("8A64557ABEC7965C31A1DF8DE12F2C6DE96AF6D1"),
-    publishTo := Some("Sonatype Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
+    publishTo := sonatypePublishToBundle.value,
     releaseCrossBuild := true,
     releaseIgnoreUntrackedFiles := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
