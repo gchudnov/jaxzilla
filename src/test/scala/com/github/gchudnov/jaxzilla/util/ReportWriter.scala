@@ -11,7 +11,7 @@ import scala.util.Using
 object ReportWriter {
 
   def write(report: Report): Unit = {
-    Using.resource(new PrintWriter("report/report.html")) { w =>
+    Using.resource(new PrintWriter("res/report/report.html")) { w =>
       w.println(
         """<!DOCTYPE html>
           |<HTML>

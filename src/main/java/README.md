@@ -1,4 +1,6 @@
-## JsonParserDriver
+## JsonDriver
+
+Json Parser is built with [JavaCC](https://javacc.github.io/javacc/), a parser generator for use with Java applications.
 
 Building parser driver with [JavaCC](https://javacc.github.io/javacc/)
 
@@ -30,4 +32,3 @@ export PATH=$PATH:$HOME/opt/javacc/scripts/
 cd src/main/java/com/github/gchudnov/jaxzilla/io/
 javacc JsonDriver.jj
 ```
-
