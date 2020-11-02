@@ -63,6 +63,7 @@ object Settings {
   )
 
   val sonatype: Seq[Setting[_]] = Seq(
+    compileOrder := CompileOrder.JavaThenScala,
     publishMavenStyle := true,
     Test / publishArtifact := false,
     credentials := Seq(Credentials(Path.userHome / ".sbt" / ".credentials-sonatype")),
