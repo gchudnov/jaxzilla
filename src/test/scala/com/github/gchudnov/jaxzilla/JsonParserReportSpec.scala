@@ -1,6 +1,6 @@
 package com.github.gchudnov.jaxzilla
 
-import com.github.gchudnov.jaxzilla.util.{ReportWriter, TestOps}
+import com.github.gchudnov.jaxzilla.util.{ ReportWriter, TestOps }
 import org.scalatest.Ignore
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

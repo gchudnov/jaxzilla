@@ -6,7 +6,7 @@ Global / cancelable := true
 def testFilter(name: String): Boolean = (name endsWith "Spec")
 
 lazy val testSettings = Seq(
-  testOptions in Test ++= Seq(Tests.Filter(testFilter))
+  Test / testOptions ++= Seq(Tests.Filter(testFilter))
 )
 
 lazy val allSettings = Settings.shared ++ testSettings
@@ -21,3 +21,6 @@ lazy val root = (project in file("."))
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
 addCommandAlias("chk", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
+addCommandAlias("plg", "; reload plugins ; libraryDependencies ; reload return")
+// NOTE: to use version check for plugins, add to the meta-project (/project/proect) sbt-updates.sbt with "sbt-updates" plugin as well.
+addCommandAlias("upd", ";dependencyUpdates; reload plugins; dependencyUpdates; reload return")

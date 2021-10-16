@@ -7,7 +7,7 @@ import sbtrelease.ReleaseStateTransformations._
 import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 
 object Settings {
-  private val scala213 = "2.13.3"
+  private val scala213 = "2.13.6"
   private val scalaV   = scala213
 
   private val sharedScalacOptions = Seq(
@@ -37,14 +37,14 @@ object Settings {
   val shared: Seq[Setting[_]] = Seq(
     scalacOptions ++= sharedScalacOptions,
     crossScalaVersions := supportedScalaVersions,
-    scalaVersion := scalaV,
-    ThisBuild / turbo := true,
-    resolvers := Resolver.combineDefaultResolvers(sharedResolvers),
-    compileOrder := CompileOrder.JavaThenScala,
-    organization := "com.github.gchudnov",
-    homepage := Some(url("https://github.com/gchudnov/jaxzilla")),
-    description := "A JSON parser for Scala with SAX-style API.",
-    licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
+    scalaVersion       := scalaV,
+    ThisBuild / turbo  := true,
+    resolvers          := Resolver.combineDefaultResolvers(sharedResolvers),
+    compileOrder       := CompileOrder.JavaThenScala,
+    organization       := "com.github.gchudnov",
+    homepage           := Some(url("https://github.com/gchudnov/jaxzilla")),
+    description        := "A JSON parser for Scala with SAX-style API.",
+    licenses           := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
     scmInfo := Some(
       ScmInfo(
         url("https://github.com/gchudnov/jaxzilla"),
@@ -58,20 +58,20 @@ object Settings {
 
   val noPublish: Seq[Setting[_]] = Seq(
     publishArtifact := false,
-    publish := {},
-    publishLocal := {},
-    skip in publish := true
+    publish         := {},
+    publishLocal    := {},
+    publish / skip  := true
   )
 
   val sonatype: Seq[Setting[_]] = Seq(
-    compileOrder := CompileOrder.JavaThenScala,
-    publishMavenStyle := true,
+    compileOrder           := CompileOrder.JavaThenScala,
+    publishMavenStyle      := true,
     Test / publishArtifact := false,
-    credentials := Seq(Credentials(Path.userHome / ".sbt" / ".credentials-sonatype")),
+    credentials            := Seq(Credentials(Path.userHome / ".sbt" / ".credentials-sonatype")),
     usePgpKeyHex("8A64557ABEC7965C31A1DF8DE12F2C6DE96AF6D1"),
-    publishTo := sonatypePublishToBundle.value,
-    releaseCrossBuild := true,
-    releaseIgnoreUntrackedFiles := true,
+    publishTo                     := sonatypePublishToBundle.value,
+    releaseCrossBuild             := true,
+    releaseIgnoreUntrackedFiles   := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
